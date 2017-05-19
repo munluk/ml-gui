@@ -30,7 +30,7 @@ class LogisticRegressionClassifier:
 
     def predict(self, x):
         y = ut.sigmoid(self.weights.T.dot(x))
-        return np.array((y >= 0.5)).astype(int)
+        return np.array(y >= 0.5).astype(int)
 
     def compute_loss(self):
         # y = self.predict(self.x_train)
@@ -39,7 +39,8 @@ class LogisticRegressionClassifier:
 
     def compute_gradients(self):
         no_samples = self.z_train.shape[1]
-        self.gradient = np.sum((ut.sigmoid(self.weights.T.dot(self.x_train)) - self.z_train) * self.x_train, axis=1,
+        self.gradient = np.sum((ut.sigmoid(self.weights.T.dot(self.x_train)) - self.z_train) * self.x_train,
+                               axis=1,
                                keepdims=True) / no_samples
 
     def update_weights(self):

@@ -1,7 +1,6 @@
 import Tkinter
 import src.utils.utilities as utilities
 import numpy as np
-import importlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from src.utils.ConfigProvider import ConfigProvider as config_provider
@@ -94,7 +93,7 @@ class App:
 
         # create button to clear the whole plot
         self.clear_all_button = Tkinter.Button(self.right_bottom_frame, text='Clear all',
-                                           command=self.clear_all_button_callback)
+                                               command=self.clear_all_button_callback)
         self.clear_all_button.pack(side='left')
 
         # create save button to save the current data set
@@ -231,7 +230,10 @@ class App:
             raise e.message
 
 
-# run GUI
-root = Tkinter.Tk()
-app = App(root)
-root.mainloop()
+if __name__ == "__main__":
+    # run GUI
+    root = Tkinter.Tk()
+    root.resizable(width=False, height=False)
+    root.wm_title("ml-gui")
+    app = App(root)
+    root.mainloop()
