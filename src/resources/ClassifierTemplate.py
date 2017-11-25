@@ -1,10 +1,4 @@
 # This script is a template for a discriminant classifier to work with the DiscriminantClassifierGUI.np.
-# If you are creating a binary classifier, then check out the training labels as shown in the __init__ method.
-#
-# IMPORTANT: 1. Script name must be identical to the class name of the classifier you are implementing.
-#            2. You can modify this script as you want, but the header of the methods __init__, train and predict may
-#               not be changed. Otherwise they won't work in the tool.
-
 
 import numpy as np
 from src.utils.utilities import Classifier
@@ -17,7 +11,7 @@ class TemplateClassifier(Classifier):
         :param x_train: training samples must be of shape < insert Shape for your classifier >
         :param z_train: training labels must be of shape < insert Shape for your classifier >
         """
-        # check if the data set contains two classes only
+        # If your classifier is only binary then check if the data set really contains two classes only
         if sum(np.any(z_train, axis=0)) > 2:
             raise Exception(
                 'Too many Classes. Binary <insert name of your Classifier> only works only on a two-class problem')
@@ -38,7 +32,7 @@ class TemplateClassifier(Classifier):
 
     def predict(self, x):
         print 'predict'
-        return
+        return self.z_train
 
     def compute_loss(self):
         print 'compute loss'
@@ -59,5 +53,5 @@ generate it with GUI and then save it by pressing the 'save' button.
 if __name__ == '__main__':
     samples = np.load('../datasets/samples.npy')
     labels = np.load('../datasets/labels.npy')
-    log_reg = TemplateClassifier(samples, labels)
-    log_reg.train()
+    classifier = TemplateClassifier(samples, labels)
+    classifier.train()

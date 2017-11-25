@@ -7,7 +7,7 @@ from src.utils.mlp_utilities import *
 np.seterr(all='raise')
 
 
-class MLP:
+class MLP(Classifier):
     # def __init__(self, n_hidden_layers, n_hidden_neurons, n_input_neurons, n_output_neurons, batchsize_train, out_transfer, stdDev, hid_transfer = sigmoid, loss_function =''):
     def __init__(self):
         cfg_dict = cfg_provider.get_mlp_config()
