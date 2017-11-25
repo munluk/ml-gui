@@ -199,7 +199,7 @@ class App:
         predicted_labels = classifier_obj.predict(test_samples)
 
         # draw decision boundaries
-        utilities.draw_decision_boundaries(self.plot_axes, meshx, meshy, predicted_labels, labels)
+        utilities.draw_decision_boundaries(self.plot_axes, meshx, meshy, predicted_labels, valid_dims)
         self.canvas.draw()
 
     def get_data_set(self):
@@ -218,7 +218,7 @@ class App:
 
         dims_valid = np.any(labels, axis=0)
         if sum(dims_valid) < 2:
-            raise DatasetException("Not enough different classes in data set")
+            raise DatasetException("Not enough classes in data set")
         dims_to_remove = [idx for idx, val in enumerate(dims_valid) if not val]
         labels = np.delete(labels, dims_to_remove, 1)
         return data, labels, dims_valid

@@ -58,8 +58,9 @@ def generate_test_set():
     return test_data, meshx, meshy
 
 
-def draw_decision_boundaries(axes, meshx, meshy, predicted_labels, labels):
-    cmap = mpl.colors.ListedColormap(np.array(['red', 'green', 'blue'])[np.any(labels, axis=0)])
+def draw_decision_boundaries(axes, meshx, meshy, predicted_labels, valid_dims):
+    cmap =mpl.colors.ListedColormap(np.array(['red', 'green', 'blue'])[valid_dims])
+    # cmap =mpl.colors.ListedColormap(np.array(['red', 'green', 'blue'])[np.any(labels, axis=0)])
     axes.contourf(meshx, meshy, predicted_labels.reshape(meshx.shape), cmap=cmap, alpha=0.3)
 
 

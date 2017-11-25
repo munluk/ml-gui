@@ -34,46 +34,84 @@ class MLP:
         self.r_bias = []
         self.accuracy = []
         self.iterator = 0
+        # # input layer
+        # self.ff.append(np.zeros((self.n_input_neurons, 1), dtype=np.float64))
+        #
+        # # create first hidden layer
+        # self.weights.append(self.stdDev * np.random.random((self.n_hidden_neurons, self.n_input_neurons)).astype(np.float64))
+        # self.bias.append(self.stdDev * np.random.random((self.n_hidden_neurons, 1)).astype(np.float64))
+        # self.weights_gradient.append(np.zeros(self.weights[0].shape,dtype=np.float64))
+        # self.weights_gradient_old.append(np.zeros(self.weights[0].shape,dtype=np.float64))
+        # self.bias_gradient.append(np.zeros(self.bias[0].shape, dtype=np.float64))
+        # self.bias_gradient_old.append(np.zeros(self.bias[0].shape, dtype=np.float64))
+        # self.ff.append(np.zeros((self.n_hidden_neurons,1), dtype=np.float64))
+        # self.r_weights.append(np.zeros(self.weights_gradient[0].shape, dtype=np.float64))
+        # # add consecutive layers
+        # for i in range(1, self.n_hidden_layers):
+        #     self.weights.append(self.stdDev * np.random.random((self.n_hidden_neurons, self.n_hidden_neurons)).astype(np.float64))
+        #     self.bias.append(self.stdDev * np.random.random((self.n_hidden_neurons, 1)).astype(np.float64))
+        #     self.weights_gradient.append(np.zeros(self.weights[i].shape, dtype=np.float64))
+        #     self.weights_gradient_old.append(np.zeros(self.weights[i].shape, dtype=np.float64))
+        #     self.bias_gradient.append(np.zeros(self.bias[i].shape, dtype=np.float64))
+        #     self.bias_gradient_old.append(np.zeros(self.bias[i].shape, dtype=np.float64))
+        #     self.ff.append(np.zeros((self.n_hidden_neurons,1), dtype=np.float64))
+        # # add output layer
+        # self.weights.append(self.stdDev * np.random.random((self.n_output_neurons, self.n_hidden_neurons)).astype(np.float64))
+        # self.bias.append(self.stdDev * np.random.random((self.n_output_neurons, 1)).astype(np.float64))
+        # self.weights_gradient.append(np.zeros(self.weights[-1].shape, dtype=np.float64))
+        # self.weights_gradient_old.append(np.zeros(self.weights[-1].shape, dtype=np.float64))
+        # self.bias_gradient.append(np.zeros(self.bias[-1].shape, dtype=np.float64))
+        # self.bias_gradient_old.append(np.zeros(self.bias[-1].shape, dtype=np.float64))
+        # self.ff.append(np.zeros((self.n_output_neurons,1), dtype=np.float64))
+        #
+        # # for rmsprop
+        # self.r_weights = copy.deepcopy(self.weights_gradient)
+        # self.r_bias = copy.deepcopy(self.bias_gradient)
+
+        # this delta is needed for stacking the network. It is the delta of the input layer
+        self.input_delta = []
+
+        # self.load_state(path='/home/lukas/weights/2x800xSigmoidxSoftmax/', number=20)
+        self.learning_rate = 0.0
+        self.learning_rate_set = False
+
+    def initialize_lists(self):
         # input layer
         self.ff.append(np.zeros((self.n_input_neurons, 1), dtype=np.float64))
 
         # create first hidden layer
-        self.weights.append(self.stdDev * np.random.random((self.n_hidden_neurons, self.n_input_neurons)).astype(np.float64))
+        self.weights.append(
+            self.stdDev * np.random.random((self.n_hidden_neurons, self.n_input_neurons)).astype(np.float64))
         self.bias.append(self.stdDev * np.random.random((self.n_hidden_neurons, 1)).astype(np.float64))
-        self.weights_gradient.append(np.zeros(self.weights[0].shape,dtype=np.float64))
-        self.weights_gradient_old.append(np.zeros(self.weights[0].shape,dtype=np.float64))
+        self.weights_gradient.append(np.zeros(self.weights[0].shape, dtype=np.float64))
+        self.weights_gradient_old.append(np.zeros(self.weights[0].shape, dtype=np.float64))
         self.bias_gradient.append(np.zeros(self.bias[0].shape, dtype=np.float64))
         self.bias_gradient_old.append(np.zeros(self.bias[0].shape, dtype=np.float64))
-        self.ff.append(np.zeros((self.n_hidden_neurons,1), dtype=np.float64))
+        self.ff.append(np.zeros((self.n_hidden_neurons, 1), dtype=np.float64))
         self.r_weights.append(np.zeros(self.weights_gradient[0].shape, dtype=np.float64))
         # add consecutive layers
         for i in range(1, self.n_hidden_layers):
-            self.weights.append(self.stdDev * np.random.random((self.n_hidden_neurons, self.n_hidden_neurons)).astype(np.float64))
+            self.weights.append(
+                self.stdDev * np.random.random((self.n_hidden_neurons, self.n_hidden_neurons)).astype(np.float64))
             self.bias.append(self.stdDev * np.random.random((self.n_hidden_neurons, 1)).astype(np.float64))
             self.weights_gradient.append(np.zeros(self.weights[i].shape, dtype=np.float64))
             self.weights_gradient_old.append(np.zeros(self.weights[i].shape, dtype=np.float64))
             self.bias_gradient.append(np.zeros(self.bias[i].shape, dtype=np.float64))
             self.bias_gradient_old.append(np.zeros(self.bias[i].shape, dtype=np.float64))
-            self.ff.append(np.zeros((self.n_hidden_neurons,1), dtype=np.float64))
+            self.ff.append(np.zeros((self.n_hidden_neurons, 1), dtype=np.float64))
         # add output layer
-        self.weights.append(self.stdDev * np.random.random((self.n_output_neurons, self.n_hidden_neurons)).astype(np.float64))
+        self.weights.append(
+            self.stdDev * np.random.random((self.n_output_neurons, self.n_hidden_neurons)).astype(np.float64))
         self.bias.append(self.stdDev * np.random.random((self.n_output_neurons, 1)).astype(np.float64))
         self.weights_gradient.append(np.zeros(self.weights[-1].shape, dtype=np.float64))
         self.weights_gradient_old.append(np.zeros(self.weights[-1].shape, dtype=np.float64))
         self.bias_gradient.append(np.zeros(self.bias[-1].shape, dtype=np.float64))
         self.bias_gradient_old.append(np.zeros(self.bias[-1].shape, dtype=np.float64))
-        self.ff.append(np.zeros((self.n_output_neurons,1), dtype=np.float64))
-
-        # this delta is needed for stacking the network. It is the delta of the input layer
-        self.input_delta = []
+        self.ff.append(np.zeros((self.n_output_neurons, 1), dtype=np.float64))
 
         # for rmsprop
         self.r_weights = copy.deepcopy(self.weights_gradient)
         self.r_bias = copy.deepcopy(self.bias_gradient)
-
-        # self.load_state(path='/home/lukas/weights/2x800xSigmoidxSoftmax/', number=20)
-        self.learning_rate = 0.0
-        self.learning_rate_set = False
 
     def forward(self, X):
         """
@@ -120,7 +158,7 @@ class MLP:
             delta = self.weights[i].T.dot(delta) * self.hid_transfer(self.ff[i], deriv=True)
         self.input_delta = delta
 
-    def update_weights(self, learning_rate = 0.01, momentum_flag = True):
+    def update_weights(self, learning_rate=0.01, momentum_flag=True):
         """
         :param learning_rate: Learning rate for SGD
         :param momentum_flag: 'True' -> Uses momentum, 'False' -> standard SGD
@@ -199,6 +237,8 @@ class MLP:
         X = X[:, 0:2].T
         z = z.T
         cfg_dict = cfg_provider.get_mlp_config()
+        self.n_output_neurons = np.shape(z)[0]
+        self.initialize_lists()
         self.learning_rate = float(cfg_dict['learning_rate'])
         momentum_flag = bool(cfg_dict['momentum'])
         train_steps = int(cfg_dict['train_steps'])
