@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib as mpl
+import abc
+# from abc import ABCMeta
 
 
 def sigmoid(x, deriv=False):
@@ -44,7 +46,6 @@ def softmax(x, deriv=False, classify=False):
     dif = x - max_vals
     return np.exp(dif - np.log(np.sum(np.exp(dif), axis=0, keepdims=True)))
 
-
 '''
 TODO: Softmax, RMSPROP, RPOP, plot_decision_region, basis functions
 '''
@@ -61,6 +62,7 @@ def draw_decision_boundaries(axes, meshx, meshy, predicted_labels, labels):
     cmap = mpl.colors.ListedColormap(np.array(['red', 'green', 'blue'])[np.any(labels, axis=0)])
     axes.contourf(meshx, meshy, predicted_labels.reshape(meshx.shape), cmap=cmap, alpha=0.3)
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -70,3 +72,19 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+
+class DatasetException(Exception):
+    pass
+
+
+class Classifier:
+    __metaclass__ = abc.ABCMeta
+
+    @abc.abstractmethod
+    def train(self, samples, lables):
+        pass
+
+    @abc.abstractmethod
+    def predict(self, samples):
+        pass

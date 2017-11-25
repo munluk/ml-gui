@@ -1,8 +1,9 @@
 import numpy as np
 import src.utils.utilities as ut
+from src.utils.utilities import Classifier
 
 
-class SoftZeroOneClassifier:
+class SoftZeroOneClassifier(Classifier):
     def __init__(self):
         """
         Initialization of the logistic classifier.

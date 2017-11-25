@@ -4,6 +4,7 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from src.utils.ConfigProvider import ConfigProvider as config_provider
+from src.utils.utilities import DatasetException
 
 
 class App:
@@ -184,7 +185,7 @@ class App:
         is called to train a classifier on the samples in the containers. Which is classifier is selected with the
         variable self.selected_classifier which is the state variable for the radio buttons classifier_radiobutton
         """
-        data, labels = self.get_data_set()
+        data, labels, valid_dims = self.get_data_set()
 
         # Here the selected classifier object is dynamically instantiated
         classifier_keys = self.classifier_option.keys()[self.selected_classifier.get()]
@@ -214,14 +215,20 @@ class App:
         one_hot_blue[:, 2] = 1
         data = np.vstack((self.c_red, self.c_green, self.c_blue))
         labels = np.vstack((one_hot_red, one_hot_green, one_hot_blue))
-        return data, labels
+
+        dims_valid = np.any(labels, axis=0)
+        if sum(dims_valid) < 2:
+            raise DatasetException("Not enough different classes in data set")
+        dims_to_remove = [idx for idx, val in enumerate(dims_valid) if not val]
+        labels = np.delete(labels, dims_to_remove, 1)
+        return data, labels, dims_valid
 
     def save_data_set(self):
         """
         This function saves the current data set to the working folder
         :return:
         """
-        samples, labels = self.get_data_set()
+        samples, labels, valid_dims = self.get_data_set()
         try:
             np.save('samples.npy', samples)
             np.save('labels.npy', labels)

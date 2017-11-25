@@ -7,16 +7,16 @@
 
 
 import numpy as np
+from src.utils.utilities import Classifier
 
 
-class TemplateClassifier:
+class TemplateClassifier(Classifier):
     def __init__(self, x_train, z_train):
         """
         Initialization of the your classifier.
         :param x_train: training samples must be of shape < insert Shape for your classifier >
         :param z_train: training labels must be of shape < insert Shape for your classifier >
         """
-
         # check if the data set contains two classes only
         if sum(np.any(z_train, axis=0)) > 2:
             raise Exception(
@@ -29,7 +29,7 @@ class TemplateClassifier:
         self.weights = np.array([])
         self.gradient = np.zeros(self.weights.shape)
 
-    def train(self):
+    def train(self, x_train, z_train):
         print 'train'
         # self.predict(self.x_train)
         self.compute_loss()

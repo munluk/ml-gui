@@ -1,6 +1,7 @@
 import numpy as np
 import copy
 import os
+from src.utils.utilities import Classifier
 from src.utils.ConfigProvider import ConfigProvider as cfg_provider
 from src.utils.mlp_utilities import *
 np.seterr(all='raise')

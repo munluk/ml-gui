@@ -1,7 +1,8 @@
 import numpy as np
+from src.utils.utilities import Classifier
 
 
-class KDiscriminantClassifier:
+class KDiscriminantClassifier(Classifier):
     def __init__(self):
         self.x_train = np.array([], dtype=np.float64)
         self.z_train = np.array([], dtype=np.float64)
