@@ -5,4 +5,4 @@ This is a little toy program allows you to places dots of the color red, green a
 <img src="https://github.com/munluk/ml-gui/blob/master/images/mlp_classification.png" width="90%"></img>
 <img src="https://github.com/munluk/ml-gui/blob/master/images/soft-zero-one_classification.png" width="90%"></img>
 
-
+A manual is following in the future...
