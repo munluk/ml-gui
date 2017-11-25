@@ -89,7 +89,7 @@ class App:
         frame.pack()
 
         # create button to clear everything except the samples
-        self.clear_button = Tkinter.Button(self.right_bottom_frame, text='Clear', command=self.clear_button_callback)
+        self.clear_button = Tkinter.Button(self.right_bottom_frame, text='Clear regions', command=self.clear_button_callback)
         self.clear_button.pack(side='left')
 
         # create button to clear the whole plot
@@ -98,7 +98,7 @@ class App:
         self.clear_all_button.pack(side='left')
 
         # create save button to save the current data set
-        self.save_button = Tkinter.Button(self.right_bottom_frame, text='Save', command=self.save_data_set)
+        self.save_button = Tkinter.Button(self.right_bottom_frame, text='Save dataset', command=self.save_data_set)
         self.save_button.pack(side='left')
 
     def clear_all_button_callback(self):
