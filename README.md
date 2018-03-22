@@ -13,7 +13,9 @@ cd ml-gui
 python DiscriminantClassifierGUI.py
 ```
 
-In order to use your own classifier you have to create a new .py file in the `src/classifiers/`. Create a class the inerherits the class `classifier` from 'src/utils/utilities`. ***In order to work with the Gui, the class name must match the file name of your classifier script.***
+In order to use your own classifier you have to create a new .py file in the `src/classifiers/`. Create a class the inerherits the class `classifier` from `src/utils/utilities`. ***In order to work with the Gui, the class name must match the file name of your classifier script.***
+
+The file `src/resources/ClassifierTemplate.py` contains a template for a classifier which you can use.
 
 <img src="https://github.com/munluk/ml-gui/blob/master/images/k-discriminant-classification.png" width="90%"></img>
 <img src="https://github.com/munluk/ml-gui/blob/master/images/mlp_classification.png" width="90%"></img>
