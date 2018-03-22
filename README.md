@@ -17,6 +17,7 @@ In order to use your own classifier you have to create a new .py file in the `sr
 
 The file `src/resources/ClassifierTemplate.py` contains a template for a classifier which you can use.
 
+# Preview
 <img src="https://github.com/munluk/ml-gui/blob/master/images/k-discriminant-classification.png" width="90%"></img>
 <img src="https://github.com/munluk/ml-gui/blob/master/images/mlp_classification.png" width="90%"></img>
 <img src="https://github.com/munluk/ml-gui/blob/master/images/soft-zero-one_classification.png" width="90%"></img>
